@@ -1,0 +1,35 @@
+Data Parsing: Can be made better using pdf page as an image and then sending it to image to text model, for better structured data 
+              parsing. 
+
+              Need to make a multimodal RAG, using data parser's like dockling etc. 
+
+Chunking Strategy: Sometimes the chunks retrieved dont contain enough context, although they are similar to the user's query. 
+                   And when the chunk size is made large, sometimes the retriever might miss the small details present in the embe-
+                   ding of large text. 
+
+                   Use of better embedding models like open-ai embeddings or larger huggingface embedding models
+
+Retrieval: Not all the similar chunks are fetched by the retriever. Like if a passage related to the user's query is divided and
+           stored in 6 chunks simultaneously, only 2 of the related chunks are fetched, others are not. This leads to providing 
+           half context to the llm model. 
+
+           I have implemented Multi-Query Retrieval which generates 3 similar queries to the original query of the user to tackle
+           vague user questions or expand the area of search for similar chunks in vector store. I havent tweaked it till now.
+
+           I used MMR ( Maximum Marginal Relevance ) because Iterative selection: relevance + diversity, low redundancy, Useful 
+           when you need well rounded answer.
+           
+           Similarity Search can retrieve redundant chunks which are similar to each other (This can be useful in some situations)
+
+           Need to explore other methods
+
+Augmentation: Haven't used a prompt template till now, which is necessary to properly fit the user's question, context and llm's
+              task to get proper and well rounded answer from the llm. 
+
+              Need to define system message, user message/ question, llm's reply
+
+Generation: The answers generated are in random structure until user asks for the answe in a particular structure. 
+            Also many times the llm replies in very concise way even when asked about a topic in detail but this is mainly because
+            the final retrieved chunks are not that useful.
+
+Other Functionalities: Iterative RAG, which retrieves chunks multiple times to get that perfect 
